@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # MySQL (データベースのコンテナ情報)
+  yuumaproject-mysql:
+    build: ./mysql/
+    container_name: "yuumaproject_Mysql"
+    volumes:
+      # - ./mysql/initdb.d:/docker-entrypoint-initdb.d # 初期処理のフォルダ。初回起動のみでOK
+      - ./mysql/db:/var/lib/mysql # ここにデータ永続化するためのファイルが入る。
+    image: mysqlapp
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysqlpass1234
+      - MYSQL_USER=docker
+      - MYSQL_PASSWORD=mysqlpass1234
+      - MYSQL_DATABASE=mydatabase  # データベースを自動作成
+      - TZ='Asia/Tokyo'
+    ports:
+      - 3322:3306
+    networks:
+      yuumaproject_network:
+        ipv4_address: 192.168.100.8  # サブネット範囲内のIPに変更
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Python (Djangoのコンテナ情報)
+  yuumaproject-django:
+    build: ./django/
+    container_name: 'yuumaproject_django'
+    restart: always
+    tty: true  # 正常終了させないための仮プロセス
+    ports:
+      - "8222:8000"  # Django用
+    volumes:
+      - ./django/dir:/workdir/dir
+    networks:
+      - yuumaproject_network
+    depends_on:
+      yuumaproject-mysql:
+        condition: service_healthy  # MySQLが健全な状態になるまで待機
+
+# Docker内で使用するネットワークの設定
+networks:
+  yuumaproject_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+          gateway: 192.168.100.1  # ゲートウェイをサブネットに合わせて変更

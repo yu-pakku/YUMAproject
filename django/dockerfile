@@ -1,0 +1,28 @@
+FROM python:3
+USER root
+
+#システムの言語設定を日本語に設定
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:ja
+ENV LC_ALL ja_JP.UTF-8
+ENV TZ JST-9
+ENV TERM xterm
+
+#必要パッケージをインストール
+RUN apt-get update
+RUN apt-get -y install locales && \
+    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8
+RUN pip install --upgrade pip
+RUN pip install --upgrade setuptools
+
+#djangoをインストール
+RUN pip install django  
+#MySQL操作用のライブラリをインストール
+RUN pip install mysqlclient 
+
+
+# WORKDIR /workdir/dir
+WORKDIR /workdir/dir/myproject
+CMD python manage.py runserver 0.0.0.0:8000
+
+
