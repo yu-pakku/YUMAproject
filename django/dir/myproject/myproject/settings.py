@@ -82,7 +82,7 @@ DATABASES = {
         'USER':'root',#Mysqlユーザー名(docker-compose.ymlで指定したもの)
         'PASSWORD':'mysqlpass1234',#Mysqlのパスワード(docker-compose.ymlで指定したもの)
         'HOST':'yuumaproject-mysql',#mysqlコンテナ名(docker-compose.ymlで指定したもの)
-        'POST':'3306',#mysqlのポート
+        'PORT': '3306',#mysqlのポート
     }
 }
 
