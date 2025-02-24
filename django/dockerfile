@@ -19,6 +19,7 @@ RUN pip install --upgrade setuptools
 RUN pip install django  
 #MySQL操作用のライブラリをインストール
 RUN pip install mysqlclient 
+RUN pip install Pillow
 
 
 # WORKDIR /workdir/dir

@@ -7,5 +7,5 @@ class Skills(models.Model):
     skill_id = models.AutoField(primary_key=True)
     skill_name = models.CharField(max_length=255)
     skill_level = models.IntegerField(default=0)
-    skill_script = models.FileField(upload_to='skills/',null=True,blank=True)
+    skill_type = models.CharField(max_length=255)
     skill_description = models.TextField()
