@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',#MYsqlバックエンド
+        'NAME': 'mydatabase',#作成したデータベース名
+        'USER':'root',#Mysqlユーザー名(docker-compose.ymlで指定したもの)
+        'PASSWORD':'mysqlpass1234',#Mysqlのパスワード(docker-compose.ymlで指定したもの)
+        'HOST':'yuumaproject-mysql',#mysqlコンテナ名(docker-compose.ymlで指定したもの)
+        'POST':'3306',#mysqlのポート
     }
 }
 
