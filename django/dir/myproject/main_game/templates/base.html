@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -5,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="Description" content="木を育てるゲーム">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <title>木を育てるゲーム</title>
 </head>
 <body>
@@ -19,8 +21,11 @@
   </header>
 
   <main>
+
     <section>
-      <h3> <!-- ここにメインの木！ --> </h3>
+      <button>
+        {% include 'afforestation_area.html' %}
+      </button>
     </section>
     <section>
       <h3> <!-- ここに色々プレビュー！ --> </h3>
