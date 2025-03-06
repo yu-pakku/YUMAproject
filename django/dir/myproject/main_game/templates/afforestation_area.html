@@ -1,0 +1,7 @@
+{% load static %}
+
+    {% block content %}
+        {% for i in afforestation_size %}
+            <p><img src="{% static 'img/tree_img/tree'|add:tree_age|add:'.png' %}" alt="tree"></p>
+        {% endfor %}
+    {% endblock %}
